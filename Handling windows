@@ -1,0 +1,87 @@
+package testintroduction;
+
+import java.util.Set;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class Windowhandle {
+
+public static void main(String[] args) throws InterruptedException {
+	
+	// Launch the Chrome browser
+    WebDriver driver = new ChromeDriver();
+
+    // Navigate to the e-commerce website-amazon
+    driver.get("https://www.hyrtutorials.com/p/window-handles-practice.html");
+    driver.manage().window().maximize();
+
+    // Wait for a few seconds to ensure the page is fully loaded
+    Thread.sleep(3000);
+    
+    
+  //single window
+//	String parentWindowHandle	= driver.getWindowHandle();	
+//	System.out.println("parent Window Handle is - "+ parentWindowHandle + driver.getTitle());
+//    driver.findElement(By.id("newWindowBtn")).click();	
+//    Set <String>windowHandles= driver.getWindowHandles();
+//    for(String windowHandle : windowHandles) {
+//    	if(!windowHandle.equals(parentWindowHandle)) {
+//    	
+//    		driver.switchTo().window(windowHandle);
+//        	driver.manage().window().maximize();
+//        	driver.findElement(By.id("firstName")).sendKeys("monika");
+//        	Thread.sleep(5000);
+//        	driver.close();
+//    	}
+//    
+//    	
+//    }
+//    	
+//	driver.switchTo().window(parentWindowHandle);
+//	Thread.sleep(5000);
+//	driver.findElement(By.id("name")).sendKeys("kavya");
+	
+	//single tab
+	
+	String parentWindowHandle	= driver.getWindowHandle();	
+	System.out.println("parent Window Handle is - "+ parentWindowHandle + driver.getTitle());
+    driver.findElement(By.id("newTabBtn")).click();	
+    Set <String>windowHandles= driver.getWindowHandles();
+    for(String windowHandle : windowHandles) {
+    	if(!windowHandle.equals(parentWindowHandle)) {
+    	
+    		driver.switchTo().window(windowHandle);
+    		System.out.println(driver.findElement(By.id("output")).getText());
+			Thread.sleep(10000);
+			WebElement prompt= driver.findElement(By.id("promptBox"));
+			prompt.click();
+			System.out.println(driver.switchTo().alert().getText());
+			driver.switchTo().alert().sendKeys("kavya");				
+			driver.switchTo().alert().accept();
+			System.out.println(driver.findElement(By.id("output")).getText());
+			prompt.click();
+			System.out.println(driver.switchTo().alert().getText());
+			driver.switchTo().alert().dismiss();
+			System.out.println(driver.findElement(By.id("output")).getText());
+        	Thread.sleep(5000);
+        	driver.close();
+    	}
+    
+    	
+    }
+    	
+	driver.switchTo().window(parentWindowHandle);
+	Thread.sleep(5000);
+	driver.findElement(By.id("name")).sendKeys("monika");
+	
+	
+	
+}
+
+}
+
+    
+    
