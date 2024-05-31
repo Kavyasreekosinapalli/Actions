@@ -1,0 +1,28 @@
+package testintroduction;
+
+import java.util.Base64;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class EDpassex {
+
+	public static void main(String[] args) {
+		WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("https://www.hyrtutorials.com/p/css-selectors-practice.html");
+		driver.findElement(By.id("input-email")).sendKeys("testuser123@gmail.com");
+		String decryptedpassword = returnDecryptedpassword("VGVzdEAxMjM=");
+		driver.findElement(By.id("input-password")).sendKeys(decryptedpassword);
+		driver.findElement(By.cssSelector("input[value-'login']")).click();
+		
+	}
+
+	public static String returnDecryptedpassword(String encryptedpassword)
+	{
+		byte[]decryptedpasswordInbytes= Base64.getDecoder().decode(encryptedpassword);
+		String decryptedpasswordInText = new String(decryptedpasswordInbytes);
+		return decryptedpasswordInText;
+	}
+}
