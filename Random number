@@ -1,0 +1,31 @@
+package testintroduction;
+
+import java.util.Random;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class Randomnum {
+
+	public static void main(String[] args) throws InterruptedException {
+		
+		
+		// Launch the Chrome browser
+	    WebDriver driver = new ChromeDriver();
+
+	    // Navigate to the e-commerce website-amazon
+	    driver.get("https://www.youtube.com/");
+	    driver.manage().window().maximize();
+
+	    // Wait for a few seconds to ensure the page is fully loaded
+	    Thread.sleep(2000);
+		
+	    
+	    driver.findElement(By.xpath("//input[@id='search']")).hashCode();
+		Random rnd= new Random();
+	    int n= rnd.nextInt();
+	    System.out.println(n);
+	}
+
+}
