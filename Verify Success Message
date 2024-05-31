@@ -1,0 +1,36 @@
+package testintroduction;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class VerifySuccessMessageVisibility {
+    public static void main(String[] args) {
+        // Set the path to the ChromeDriver executable
+        System.setProperty("webdriver.chrome.driver", "path_to_chromedriver");
+
+        // Initialize ChromeDriver
+        WebDriver driver = new ChromeDriver();
+
+        // Maximize the browser window
+        driver.manage().window().maximize();
+
+        // Navigate to the target application URL
+        driver.get("https://www.example.com");
+
+        // Find the success message element by its ID, name, XPath, or other suitable locators
+        // Here, assume the success message has an ID of "successMessage" (Replace with the actual locator)
+        WebElement successMessage = driver.findElement(By.id("successMessage"));
+
+        // Check if the success message is displayed
+        if (successMessage.isDisplayed()) {
+            System.out.println("Success message is visible");
+        } else {
+            System.out.println("Success message is not visible");
+        }
+
+        // Close the browser
+        driver.quit();
+    }
+}
