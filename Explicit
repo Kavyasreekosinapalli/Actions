@@ -1,0 +1,51 @@
+package testintroduction;
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class Trialexplicit {
+
+	public static void main(String[] args) throws Exception {
+		WebDriverManager.chromedriver().setup();
+		WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		
+		//driver.manage().window().setSize(new Dimension(1000, 1000));
+		
+		
+	//		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));---preferable 
+//			FluentWait<WebDriver> wait = new FluentWait<WebDriver>(driver);-0.5 
+//			wait.withTimeout(Duration.ofSeconds(10));
+			
+			driver.get("https://www.saucedemo.com/v1/index.html");
+			driver.findElement(By.id("user-name")).sendKeys("problem_user");
+			driver.findElement(By.id("password")).sendKeys("secret_sauce");
+			
+			driver.findElement(By.id("login-button")).click();
+			
+			driver.findElement(By.className("bm-burger-button")).click();
+			
+			//logout_sidebar_link
+			
+			//Thread.sleep(10000);- stsaticswait 
+			
+			WebDriverWait obj = new WebDriverWait(driver, Duration.ofSeconds(10));
+			
+			obj.until(ExpectedConditions.visibilityOfElementLocated(By.id("logout_sidebar_link")));
+			
+			
+			driver.findElement(By.xpath("//a[@id='logout_sidebar_link']")).click();
+			
+		
+	 
+	    
+	}
+
+}
