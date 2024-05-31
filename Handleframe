@@ -1,0 +1,47 @@
+package testintroduction;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+public class HandleFrame {
+
+	public static void main(String[] args) throws Exception {
+		// TODO Auto-generated method stub
+
+		// Launch the Chrome browser
+	    WebDriver driver = new ChromeDriver();
+	    driver.manage().window().maximize();
+
+	    // Navigate to the e-commerce website-amazon
+	    driver.get("https://www.hyrtutorials.com/p/frames-practice.html");
+	    
+
+	    // Wait for a few seconds to ensure the page is fully loaded
+	    Thread.sleep(3000);
+	    
+	    
+	    driver.findElement(By.id("name")).sendKeys("monika");//main frame
+	    Thread.sleep(5000);
+	    
+	    driver.switchTo().frame("frm1");//frame1
+	    Select coursename_dd = new Select (driver.findElement(By.id("name")));
+	    coursename_dd.selectByVisibleText("Java");
+	    Thread.sleep(3000);
+	    
+	    driver.switchTo().defaultContent();//main frame
+	   
+	    driver.switchTo().frame("frm2");//frame2
+	    driver.findElement(By.id("firstName")).sendKeys("monika1");
+	    
+	    
+	    driver.switchTo().defaultContent();// main frame
+	    driver.findElement(By.id("name")).clear();
+	    driver.findElement(By.id("name")).sendKeys("changed monika");//main frame
+	    
+	    
+	    
+
+	}
+
+}
