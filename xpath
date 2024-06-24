@@ -1,0 +1,115 @@
+package testintroduction;
+
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class Xpathpractice {
+
+		private static WebDriver driver;
+		public static void main(String[] args) {
+			WebDriverManager.chromedriver().setup();
+			driver = new ChromeDriver();
+			driver.manage().window().maximize();
+			chapter6();
+			
+
+	}
+
+		public static void highlight(WebElement element) {
+			JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+			jsExecutor.executeScript("arguments[0].setAttribute('style', 'border:2px solid red; background:yellow')", element);
+		
+		}
+		
+		//types of xpath
+		public static void chapter2() {
+			
+			driver.get("https://www.w3schools.com/");
+			
+			//absolute xpath
+			highlight(driver.findElement(By.xpath("/html/body/div[2]/div/nav/a[2]")));
+			
+			//relative xpath
+			highlight(driver.findElement(By.xpath("//a[@id='navbtn_services']")));
+		}
+		
+		//xpath using  attributes
+		public static void chapter3() {
+			driver.get("https://www.w3schools.com/");
+			
+			//tag [attribute='attribute value']
+			//id,name,classname,tagname
+			
+			highlight(driver.findElement(By.xpath("//a[@title='Tutorials and References']")));
+
+			highlight(driver.findElement(By.xpath("//a[@id='navbtn_services']")));
+			
+		}
+		
+		//xpath using operators
+		
+		public static void chapter4() {
+		
+			driver.get("https://www.hyrtutorials.com/p/add-padding-to-containers.html");
+
+			//  = != < > <= >=
+			driver.findElement(By.xpath("//input[@maxlength>=15]")).sendKeys("monika");
+			driver.findElement(By.xpath("//input[@maxlength!=15]")).sendKeys("kavyaa");
+			
+			List<WebElement>elements= driver.findElements(By.xpath("//input[@maxlength>=5]"));
+			for(WebElement element:elements) {
+				
+				highlight(element);
+			}
+		
+		}
+		
+		//xpath using conditions
+		 
+		// and not or 
+		
+		public static void chapter5() {
+			
+			driver.get("https://www.hyrtutorials.com/p/add-padding-to-containers.html");
+			
+			List<WebElement>elements= driver.findElements(By.xpath("//input[@maxlength<=15 and  @name='name' and @type='text']"));
+			System.out.println(elements.size());
+			
+
+			List<WebElement>elementss= driver.findElements(By.xpath("//input[@maxlength<=15 or  @name='namnge' or @type='tehhxt']"));
+			System.out.println(elementss.size());
+			
+			List<WebElement>elementsss= driver.findElements(By.xpath("//input[not(@maxlength<=15)]"));
+			System.out.println(elementsss.size());
+			
+		}
+		
+		//xpath usinhg index
+		
+		public static void chapter6() {
+			
+			
+			driver.get("https://www.hyrtutorials.com/p/add-padding-to-containers.html");
+			
+			
+		highlight	(driver.findElement(By.xpath("(//table[@id='contactList']/tbody/tr/td)[6]")));
+			
+			
+		}
+		
+		
+	//xpath using functions
+		
+		
+		
+		
+		
+}
+
