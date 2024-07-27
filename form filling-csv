@@ -1,0 +1,172 @@
+
+
+	public static void main(String[] args) {
+	    WebDriver driver = null;
+	    BufferedReader br = null;
+	    try {
+	        // Setup WebDriver
+	        WebDriverManager.chromedriver().setup();
+	        driver = new ChromeDriver();
+	        driver.manage().window().maximize();
+	        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+	        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
+
+	        // Login once
+	        login(driver);
+
+	        // Navigate to Direct Registration section
+	        navigateToDirectRegistration(driver);
+
+	        // Path to CSV file
+	        String csvFile = "C:\\Users\\kavya\\eclipse-workspace\\Reachall\\Data\\sample.csv";
+	        String line = "";
+	        String cvsSplitBy = ",";
+
+	        // Read CSV file
+	        br = new BufferedReader(new FileReader(csvFile));
+	        // Skip header line
+	        br.readLine();
+
+	        // Loop through each line in CSV
+	        while ((line = br.readLine()) != null) {
+	            // Trim the line and skip if it's empty
+	            line = line.trim();
+	            if (line.isEmpty()) {
+	                System.out.println("Skipping empty line");
+	                continue;
+	            }
+
+	            // Split CSV data by comma
+	            String[] data = line.split(cvsSplitBy);
+
+	            // Check if we have enough data
+	            if (data.length < 3) {
+	                System.out.println("Skipping invalid line: " + line);
+	                continue;
+	            }
+
+	            // Extract firstname, contact, and email from CSV
+	            String firstname = data[0].trim();
+	            String contact = data[1].trim();
+	            String email = data[2].trim();
+	            
+	            
+	         // Select dropdown option
+	            selectDropdownOption(driver);
+
+	            // Fill form fields with CSV data
+	            fillForm(driver, firstname, contact, email);
+
+
+	            // Submit the form
+	            submitForm(driver);
+
+	            System.out.println("Data saved successfully for line: " + line);
+
+	            // Wait for submission and click "Add Again"
+	            clickAddAgain(driver);
+	        }
+
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    } finally {
+	        // Close the BufferedReader
+	        if (br != null) {
+	            try {
+	                br.close();
+	            } catch (IOException e) {
+	                e.printStackTrace();
+	            }
+	        }
+
+	        // Logout
+	        if (driver != null) {
+	            logout(driver);
+	            driver.quit();
+	        }
+	    }
+	}
+    private static void login(WebDriver driver) {
+        driver.get("https://ge-erp.com/Admin/Login");
+        driver.findElement(By.id("txtEmail")).sendKeys("a@a.com");
+        driver.findElement(By.id("txtPassword")).sendKeys("Sund@y@123");
+        driver.findElement(By.id("btnLogin")).click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.urlContains("Dashboard"));
+    }
+
+    private static void navigateToDirectRegistration(WebDriver driver) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[contains(text(),'Admission')]"))).click();
+        wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Direct Registration"))).click();
+        wait.until(ExpectedConditions.elementToBeClickable(By.className("mybtndark"))).click();
+    }
+
+    private static void fillForm(WebDriver driver, String firstname, String contact, String email) {
+        driver.findElement(By.name("nm_undefined_firstname")).sendKeys(firstname);
+        driver.findElement(By.name("nm_undefined_contactmobileno")).sendKeys(contact);
+        driver.findElement(By.name("nm_undefined_email")).sendKeys(email);
+    }
+
+    private static void selectDropdownOption(WebDriver driver) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement dropdown = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(text(),'Admission For Class')]")));
+        dropdown.click();
+        WebElement option = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(text(),'IV')]")));
+        option.click();
+    }
+
+//    private static void submitForm(WebDriver driver) {
+//    	
+//    	Actions act = new Actions(driver);
+//       WebElement submit =  driver.findElement(By.xpath("//button[@type='submit']"));
+//       
+//   
+//       act.doubleClick(submit).perform();
+//       
+//       System.out.println("clicked save button twice successfully");
+//        
+//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='Toastify__toast Toastify__toast--success']")));
+//        System.out.println("Form submitted successfully");
+//       
+//    }
+    
+   private static void submitForm(WebDriver driver) {
+    	
+    	
+       WebElement submit =  driver.findElement(By.xpath("//button[@type='submit']"));
+      submit.click();
+	   
+	   
+//	   WebElement Cancel =  driver.findElement(By.xpath("//button[text()='Cancel']"));
+//	   Cancel.click();
+	   
+//	   WebElement btlist =  driver.findElement(By.xpath("//button[text()='Back To List']"));
+//	   btlist.click();
+	   
+      
+      System.out.println("clicked save button once successfully");
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='Toastify__toast Toastify__toast--success']")));
+        System.out.println("Form submitted successfully");
+       
+    }
+
+
+    private static void clickAddAgain(WebDriver driver) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.elementToBeClickable(By.className("mybtndark"))).click();
+    }
+
+    private static void logout(WebDriver driver) {
+     driver.findElement(By.xpath("//li[@class='nav-item dropdown']//a[@class='nav-link text-light py-0']")).click();
+        
+        driver.findElement(By.xpath("//a[@id='submit']")).click();
+        System.out.println("logout done successfully");
+     
+        // Wait for logout to complete
+        
+        
+    }
+}
