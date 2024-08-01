@@ -1,0 +1,37 @@
+package Project;
+
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Point;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class size {
+    public static void main(String[] args) throws InterruptedException {
+        
+        WebDriverManager.chromedriver().setup();
+
+        WebDriver driver = new ChromeDriver();
+
+        
+        driver.get("https://www.google.com/");
+
+        
+        System.out.println("Current window size: " + driver.manage().window().getSize());
+        Thread.sleep(5000);
+        
+      
+        Dimension newSize = new Dimension(600, 600);
+        driver.manage().window().setSize(newSize);
+        
+        Thread.sleep(5000);
+        
+        Point newPosition = new Point(500, 500);
+        driver.manage().window().setPosition(newPosition);
+        
+        Thread.sleep(5000);
+
+        driver.quit();
+    }
+}
+
