@@ -1,0 +1,60 @@
+package testintroduction;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class Revrse {
+
+	public static void main(String[] args) throws InterruptedException {
+		WebDriverManager.chromedriver().setup();
+		WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("https://www.purplle.com/");
+		
+		Thread.sleep(5000);
+		driver.findElement(By.xpath("//input[@type='search']")).click();
+		
+		Thread.sleep(5000);
+		
+		driver.findElement(By.xpath("(//input[@type='text'])[2]")).sendKeys("good vibes",Keys.ENTER);
+		
+		
+		Thread.sleep(5000);
+		
+		WebElement shopallproducts = driver.findElement(By.xpath("//span[contains(text(),'Products')]"));
+		scrollToElement(driver,shopallproducts);
+		
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("//a[contains(text(),'Add')]")).click();
+		
+		Thread.sleep(5000);
+		
+	
+		
+		driver.findElement(By.xpath("(//a[contains(text(),'Add')])[1]")).click();
+		
+		Thread.sleep(5000);
+		driver.findElement(By.xpath("(//a[contains(text(),'Add')])[2]")).click();
+		
+		Thread.sleep(5000);
+		
+		driver.findElement(By.xpath("//div[@class='inner-box inner-box__third ng-star-inserted']//div[3]//a[1]")).click();
+		
+		Thread.sleep(7000);
+		System.out.println("3 items added successfully");
+		
+	}
+	//div[@class='inner-box inner-box__third ng-star-inserted']//div[3]//a[1]
+	private static void scrollToElement(WebDriver driver, WebElement element) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView(true);", element);
+        
+	}
+	
+}
