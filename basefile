@@ -1,0 +1,30 @@
+package testintroduction;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+
+public class Baseclass {
+	
+	public String baseURL = "https://www.saucedemo.com/v1/index.html";
+	public String username = "problem_user";
+	public String password = "secret_sauce";
+	public static WebDriver driver ;
+	
+	@BeforeClass
+	
+	public void setup()
+	{
+		//System.setProperty();
+		driver = new ChromeDriver();
+	}
+	
+	@AfterClass//5
+	public void teardown()
+	{
+		//driver.quit();
+	}
+	
+
+}
